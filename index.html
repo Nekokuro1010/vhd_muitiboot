@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multi-boot VHD 配布ページ</title>
+  <meta name="description" content="multiboot済みのVHDファイル配布ページ（ダウンロード、チェックサム、注意事項）" />
+  <style>
+    :root{
+      --bg:#0b1020; --card:#121a33; --text:#e8ecff; --muted:#aab3d6;
+      --accent:#7aa2ff; --accent2:#7dffcb; --danger:#ff7a7a;
+      --border:rgba(255,255,255,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(122,162,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(125,255,203,.18), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:32px 16px 64px}
+    header{margin-bottom:18px}
+    h1{margin:0 0 8px; font-size:28px}
+    .sub{color:var(--muted); line-height:1.6}
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:14px; margin-top:18px}
+    @media (max-width:860px){ .grid{grid-template-columns:1fr} }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px 16px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .pill{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid var(--border); color:var(--muted)}
+    .pill b{color:var(--text); font-weight:600}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px; border-radius:12px; border:1px solid var(--border);
+      background: rgba(122,162,255,.16);
+      color:var(--text); text-decoration:none; font-weight:700;
+      transition: transform .06s ease, background .2s ease;
+      min-width: 220px;
+    }
+    .btn:hover{background: rgba(122,162,255,.24)}
+    .btn:active{transform: translateY(1px)}
+    .btn.secondary{background: rgba(125,255,203,.12)}
+    .btn.secondary:hover{background: rgba(125,255,203,.18)}
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono", monospace;
+      font-size: 13px;
+    }
+    pre{
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      padding:12px; border-radius:14px; overflow:auto;
+      margin:10px 0 0;
+    }
+    h2{margin:0 0 10px; font-size:18px}
+    ul{margin:8px 0 0; padding-left:18px; color:var(--muted); line-height:1.7}
+    .warn{color:var(--danger)}
+    footer{margin-top:18px; color:var(--muted); font-size:12px}
+    .small{font-size:12px; color:var(--muted)}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Multi-boot VHD 配布</h1>
+      <div class="sub">
+        multiboot済みのVHDファイルを公開しています。<br/>
+        ダウンロード前に注意事項とチェックサム確認をおすすめします（人間はよくミスるので…）。
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- メイン：ダウンロード -->
+      <section class="card">
+        <h2>ダウンロード</h2>
+
+        <div class="row" style="margin-bottom:10px;">
+<span class="pill">ファイル名: <b class="mono">multiboot.vhd</b></span>
+<span class="pill">サイズ: <b>XX.X GB</b></span>
+<span class="pill">更新日: <b>YYYY-MM-DD</b></span>
+        </div>
+
+        <!-- ▼ここを書き換える：実ファイルURL -->
+        <div class="row">
+<a class="btn" href="./multiboot.vhd" download>
+  ⬇️ VHDをダウンロード
+</a>
+
+
+          <!-- 任意：分割zipなど別ミラーがあるなら -->
+          <a class="btn secondary" href="#" onclick="alert('ミラーURLを設定してね'); return false;">
+            🔁 ミラー（任意）
+          </a>
+        </div>
+
+        <p class="small" style="margin-top:12px;">
+          ブラウザで落ちない/遅い場合は、ダウンロード支援ツールや別ブラウザを試してね。
+        </p>
+      </section>
+
+      <!-- 右：概要 -->
+      <aside class="card">
+        <h2>概要</h2>
+        <ul>
+          <li>用途：マルチブート環境の検証・起動テスト</li>
+          <li>形式：VHDX（必要ならVHDに変更してもOK）</li>
+          <li>想定：仮想環境 or ネイティブ起動（環境に依存）</li>
+        </ul>
+
+        <h2 style="margin-top:14px;">注意</h2>
+        <ul>
+          <li class="warn">個人情報（ユーザー名/鍵/履歴/ライセンス情報）が入ってないか要確認</li>
+          <li class="warn">OSやソフトの再配布がライセンス違反になるケースがあります</li>
+          <li>自己責任で使用してください（いつものやつ）</li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- チェックサム -->
+    <section class="card" style="margin-top:14px;">
+      <h2>チェックサム（改ざん/破損チェック）</h2>
+      <div class="small">
+        ここにSHA-256などを貼っておくと安心感が出ます（中身が安全とは言ってない）。
+      </div>
+
+      <!-- ▼ここを書き換える：実ハッシュ -->
+      <pre><code>SHA-256  multiboot.vhdx
+0000000000000000000000000000000000000000000000000000000000000000</code></pre>
+
+      <div class="small" style="margin-top:10px;">
+        Windowsで確認例:
+        <pre><code>certutil -hashfile multiboot.vhdx SHA256</code></pre>
+        macOS/Linuxで確認例:
+        <pre><code>shasum -a 256 multiboot.vhdx
+# または
+sha256sum multiboot.vhdx</code></pre>
+      </div>
+    </section>
+
+    <!-- 使い方 -->
+    <section class="card" style="margin-top:14px;">
+      <h2>使い方メモ（短め）</h2>
+      <ul>
+        <li>仮想環境で使う場合：新規VM作成 → 既存ディスクにVHD(X)を指定</li>
+        <li>起動に失敗する場合：UEFI/BIOS設定、セキュアブート、コントローラ種別を見直し</li>
+        <li>容量が足りない場合：VHDX拡張 → OS側でパーティション拡張</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div>© <span id="y"></span> / 配布ページ</div>
+      <div class="small">このHTMLは自由に改造してどうぞ。人間は改造が好きなので。</div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
